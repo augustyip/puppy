@@ -27,32 +27,33 @@ $f3->route('POST /',
     $file_content = file_get_contents($admin_paths_file);
     $admin_paths = explode("\n", $file_content);
 
-
-    $web=new Web;
     $request_options = array(
       'timeout' => 3,
       'ignore_errors'=>TRUE
     );
 
     foreach ($admin_paths as $path) {
+      $path = trim(preg_replace('/\s\s+/', ' ', $path));
       if (strstr($path, '%EXT%')) {
         foreach ($web_apps as $web_app) {
           $replaced_path = str_replace('%EXT%', $web_app, $path);
           $request_url = $_REQUEST['path_to_search'] . '/' . $replaced_path;
-          dd($request_url);
+          $response = Web::instance()->request($request_url,$request_options);
+          $response_header = parse_headers($response['headers']);
+          if (! empty($response_header) && in_array($response_header['status_code'], $success_res)){
+            dd($request_url . ' STATUS CODE: ' . $response_header['status_code']);
+          }
         }
       } else {
         $request_url = $_REQUEST['path_to_search'] . '/' . $path;
-        dd($request_url);
+        $response = Web::instance()->request($request_url,$request_options);
+        $response_header = parse_headers($response['headers']);
+        if (! empty($response_header) && in_array($response_header['status_code'], $success_res)){
+          dd($request_url . ' STATUS CODE: ' . $response_header['status_code']);
+        }
       }
     }
 
-
-    $web=new Web;
-    $response = $web->request(
-      'http://hk2.php.net/manual/en/',
-      $request_options
-    );
     // parse_headers($response['headers']);
 
     echo View::instance()->render('layout.php');
@@ -74,6 +75,9 @@ function dd($data, $label = NULL) {
 function parse_headers(array $headers, $header = null) {
   $output = array();
 
+  if (empty($headers))
+    return $output;
+
   if ('HTTP' === substr($headers[0], 0, 4)) {
     list(, $output['status_code'], $output['status_text']) = explode(' ', $headers[0], 3);
     unset($headers[0]);
@@ -81,7 +85,9 @@ function parse_headers(array $headers, $header = null) {
 
   foreach ($headers as $v) {
     $h = preg_split('/:\s*/', $v);
-    $output[strtolower($h[0])] = $h[1];
+    if (count($h) > 1) {
+      $output[strtolower($h[0])] = $h[1];
+    }
   }
 
   if (null !== $header) {
