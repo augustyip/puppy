@@ -5,10 +5,10 @@ import socket
 
 def find_admin_login(url) :
 
-  success_res = ['200', '500', '301', '302', '403']
-  web_apps = ['php', 'asp', 'jsp']
+  success_res = ['200', '500', '301', '302']
+  web_apps = ['php', 'asp', 'jsp', 'aspx']
 
-  with open('dict/admin_short.txt', 'r') as file_content:
+  with open('dict/admin_long.txt', 'r') as file_content:
     admin_context_paths = file_content.read().split('\n')
 
   request_urls = []
@@ -34,6 +34,7 @@ def find_admin_login(url) :
   for request_url in request_urls :
     sys.stdout.write("\b" * len(counter))
     counter = 'Searching: (' + str(i) + '/' + str(total_urls) + ')'
+    i += 1
     try:
       request = urllib.request.Request(request_url)
       response = urllib.request.urlopen(request, timeout = 3)
@@ -43,11 +44,24 @@ def find_admin_login(url) :
       if str(e.code) in success_res :
         print(str(e.code) + ' ' + request_url)
     except socket.timeout as e:
-      e
+      continue
     print(counter, end = '\r')
-    i += 1
 
   return response.status
 
-url = 'http://google.com/'
-find_admin_login(url);
+
+target_url = input('Target URL: ')
+operate = 100
+
+while isset int(operate) != 0:
+
+  print ('''
+  1. Find Admin Login.
+  0. Exit.
+  ''')
+
+  operate = input('Chose Operate: ')
+  switch
+  pass
+
+# find_admin_login(target_url);
