@@ -1,4 +1,7 @@
 import urllib.request
+import urllib.parse
+
+import json
 import sys
 import socket
 
@@ -50,18 +53,32 @@ def find_admin_login(url) :
   return response.status
 
 
-target_url = input('Target URL: ')
-operate = 100
+def quotes() :
 
-while isset int(operate) != 0:
+  endpoint = 'https://query.yahooapis.com/v1/public/yql?'
 
-  print ('''
-  1. Find Admin Login.
-  0. Exit.
-  ''')
+  params = {
+    'q' : 'select * from yahoo.finance.quotes where symbol in ("0001.hk","AAPL","GOOG","MSFT")',
+    'format' : 'json',
+    'env' : 'store://datatables.org/alltableswithkeys'
+  }
 
-  operate = input('Chose Operate: ')
-  switch
-  pass
+  query_url = endpoint+ urllib.parse.urlencode(params)
 
-# find_admin_login(target_url);
+  request = urllib.request.Request(query_url)
+  request.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0')
+  response = urllib.request.urlopen(request, timeout = 3)
+
+  query_result = json.loads(response.read().decode("utf-8"))
+
+  if len(query_result['query']['results']['quote']) > 0 :
+    for quote in query_result['query']['results']['quote'] :
+      print('{0:25} {1} {2}'.format(quote['Name'], quote['LastTradePriceOnly'].rjust(10), quote['ChangeinPercent']))
+      # print(quote['Name'] + ' : ' + quote['LastTradePriceOnly'] + quote['ChangeinPercent'])
+
+  # print(len(query_result['query']['results']['quote']))
+
+
+
+if __name__ == '__main__':
+  quotes();
