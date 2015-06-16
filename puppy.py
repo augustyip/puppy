@@ -21,17 +21,17 @@ def main() :
       quote = {}
       quote = data_source.yahoo.quotes()
 
-      title = '{0:25} {1:10} {2}'.format('Name', 'Price'.rjust(10), 'Percent'.rjust(10))
+      title = '{0:15} {1:10} {2}'.format('Name', 'Price'.rjust(10), 'Percent'.rjust(10))
 
       stdscr.addstr(3,1, title)
 
       y = 3
       for q in quote:
         y = y + 1
-        data = '{0:25} {1:10} {2}'.format(q['Name'], q['LastTradePriceOnly'].rjust(10), q['ChangeinPercent'].rjust(10))
+        data = '{0:15} {1:10} {2}'.format(q['Name'], q['LastTradePriceOnly'].rjust(10), q['ChangeinPercent'].rjust(10))
         stdscr.addstr(y,1, data)
       stdscr.refresh()
-      time.sleep(5)
+      time.sleep(float(config['Default']['refresh']))
     
   finally :
     curses.endwin()
