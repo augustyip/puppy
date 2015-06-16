@@ -15,7 +15,7 @@ def quotes() :
 
   stocks = ['"' + stock.strip() + '"' for stock in config['Default']['stocks'].split(',')]
 
-  yql = 'select * from yahoo.finance.quotes where symbol in (' + ','.join(stocks) + ')'
+  yql = 'SELECT * FROM yahoo.finance.quotes WHERE symbol IN (' + ','.join(stocks) + ')'
 
   params = {
     'q' : yql,
@@ -36,7 +36,6 @@ def quotes() :
 
     if len(query_result['query']['results']['quote']) > 0 :
       return query_result['query']['results']['quote']
-
   except :
     quotes()
 
