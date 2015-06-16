@@ -26,17 +26,21 @@ def quotes() :
 
   request = urllib.request.Request(query_url)
   request.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0')
-  response = urllib.request.urlopen(request, timeout = 3)
 
-  query_result = json.loads(response.read().decode("utf-8"))
+  try :
+    response = urllib.request.urlopen(request, timeout = 3)
+    query_result = json.loads(response.read().decode("utf-8"))
 
 
-  if len(query_result['query']['results']['quote']) > 0 :
-    return query_result['query']['results']['quote']
+    if len(query_result['query']['results']['quote']) > 0 :
+      return query_result['query']['results']['quote']
+
+  except :
+    quotes()
 
 
 def main(stdscr) :
-  try:
+  try :
     stdscr.refresh()
     # Your Code Stuff Here...
     stdscr.addstr(1,1, "Press Any Key to Exit...")
@@ -46,19 +50,19 @@ def main(stdscr) :
       quote = {}
       quote = quotes()
 
-      title = '{0:25} {1} {2}'.format('Name', 'LastTradePriceOnly', 'ChangeinPercent')
+      title = '{0:25} {1:10} {2}'.format('Name', 'Price'.rjust(10), 'Percent'.rjust(10))
 
       stdscr.addstr(3,1, title)
 
       y = 3
       for q in quote:
         y = y + 1
-        data = '{0:25} {1} {2}'.format(q['Name'], q['LastTradePriceOnly'].rjust(10), q['ChangeinPercent'])
+        data = '{0:25} {1:10} {2}'.format(q['Name'], q['LastTradePriceOnly'].rjust(10), q['ChangeinPercent'].rjust(10))
         stdscr.addstr(y,1, data)
       stdscr.refresh()
-      time.sleep(3)
+      time.sleep(5)
     
-  finally:
+  finally :
     curses.endwin()
 
 
