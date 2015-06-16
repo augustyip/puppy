@@ -1,7 +1,6 @@
-import urllib.request
-import urllib.parse
 
-import json
+import data_source.yahoo
+
 
 import sys
 import time
@@ -12,44 +11,17 @@ import curses
 
 import traceback
 
-def quotes() :
 
-  endpoint = 'https://query.yahooapis.com/v1/public/yql?'
-
-  params = {
-    'q' : 'select * from yahoo.finance.quotes where symbol in ("0001.hk","0005.hk")',
-    'format' : 'json',
-    'env' : 'store://datatables.org/alltableswithkeys'
-  }
-
-  query_url = endpoint+ urllib.parse.urlencode(params)
-
-  request = urllib.request.Request(query_url)
-  request.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0')
-
-  try :
-    response = urllib.request.urlopen(request, timeout = 3)
-    query_result = json.loads(response.read().decode("utf-8"))
-
-
-    if len(query_result['query']['results']['quote']) > 0 :
-      return query_result['query']['results']['quote']
-
-  except :
-    quotes()
-
-
-def main(stdscr) :
+def main() :
   try :
     stdscr.refresh()
     # Your Code Stuff Here...
     stdscr.addstr(1,1, "Press Any Key to Exit...")
-    stdscr.addstr(2,1, str(a))
     # stdscr.getch()
     i = 0
     while True:
       quote = {}
-      quote = quotes()
+      quote = data_source.yahoo.quotes()
 
       title = '{0:25} {1:10} {2}'.format('Name', 'Price'.rjust(10), 'Percent'.rjust(10))
 
@@ -68,7 +40,6 @@ def main(stdscr) :
 
 
 if __name__ == '__main__':
-  a = 10
   # quotes();
   try :
 
@@ -84,7 +55,7 @@ if __name__ == '__main__':
     # (like the cursor keys) will be interpreted and
     # a special value like curses.KEY_LEFT will be returned
     stdscr.keypad(1)
-    main(stdscr)
+    main()
 
     # Enter the main loop
     # Set everything back to normal
