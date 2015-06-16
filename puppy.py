@@ -44,6 +44,7 @@ def main(stdscr) :
     stdscr.refresh()
     # Your Code Stuff Here...
     stdscr.addstr(1,1, "Press Any Key to Exit...")
+    stdscr.addstr(2,1, str(a))
     # stdscr.getch()
     i = 0
     while True:
@@ -67,6 +68,7 @@ def main(stdscr) :
 
 
 if __name__ == '__main__':
+  a = 10
   # quotes();
   try :
 
