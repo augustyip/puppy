@@ -2,19 +2,17 @@
 import data_source.yahoo
 
 
-import sys
 import time
 
-import socket
 
 import curses
+import sys, traceback
 
-import traceback
-
+from lib.core.data import config
 
 def main() :
+
   try :
-    stdscr.refresh()
     # Your Code Stuff Here...
     stdscr.addstr(1,1, "Press Any Key to Exit...")
     # stdscr.getch()
@@ -38,8 +36,11 @@ def main() :
   finally :
     curses.endwin()
 
-
 if __name__ == '__main__':
+
+  # data_source.yahoo.quotes()
+  # sys.exit(0)
+
   # quotes();
   try :
 

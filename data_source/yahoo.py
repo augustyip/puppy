@@ -5,14 +5,23 @@ import urllib.parse
 
 import json
 
+from lib.core.data import config
+
+
 def quotes() :
 
-  endpoint = 'https://query.yahooapis.com/v1/public/yql?'
+  endpoint = config['Yahoo']['endpoint'] + '?'
+  # endpoint = 'https://query.yahooapis.com/v1/public/yql?'
+
+  stocks = ['"' + stock.strip() + '"' for stock in config['Default']['stocks'].split(',')]
+
+  yql = 'select * from yahoo.finance.quotes where symbol in (' + ','.join(stocks) + ')'
 
   params = {
-    'q' : 'select * from yahoo.finance.quotes where symbol in ("0001.hk","0005.hk")',
-    'format' : 'json',
-    'env' : 'store://datatables.org/alltableswithkeys'
+    'q' : yql,
+    'format' : config['Yahoo']['format'],
+    'env' : config['Yahoo']['env'],
+    'diagnostics' : config['Yahoo']['diagnostics']
   }
 
   query_url = endpoint+ urllib.parse.urlencode(params)
@@ -30,3 +39,4 @@ def quotes() :
 
   except :
     quotes()
+
