@@ -39,3 +39,5 @@ def quotes() :
   except :
     quotes()
 
+
+quote = quotes()

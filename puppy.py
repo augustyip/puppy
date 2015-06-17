@@ -1,5 +1,4 @@
 
-import data_source.yahoo
 
 
 import time
@@ -10,17 +9,20 @@ import sys, traceback
 
 from lib.core.data import config
 
+
 def main() :
 
   try :
     # Your Code Stuff Here...
     stdscr.addstr(1,1, "Loading...")
     stdscr.refresh()
+
+    from lib.source.yahoo import quote
     # stdscr.getch()
     i = 0
     while True:
-      quote = {}
-      quote = data_source.yahoo.quotes()
+      # quote = {}
+      # quote = data_source.yahoo.quotes()
 
       stdscr.addstr(1,1, "Using Yahoo Finance data, HK stocks will have 15 mins delay.")
       title = '{0:15} {1:10} {2}'.format('Name', 'Price'.rjust(10), 'Percent'.rjust(10))
