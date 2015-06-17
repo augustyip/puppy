@@ -1,15 +1,15 @@
+#!/usr/bin/env python3
 
-
+"""
+Copyright (c) August Yip (http://august.hk/)
+"""
 
 import time
-
-
 import curses
 import sys, traceback
 
 from lib.core.data import config
 from lib.source.yahoo import yahoo
-
 
 def main() :
 
