@@ -15,9 +15,7 @@ class Yahoo(object) :
     endpoint = config['Yahoo']['endpoint'] + '?'
     # endpoint = 'https://query.yahooapis.com/v1/public/yql?'
 
-    symbols = ['"' + symbol.strip() + '"' for symbol in config['Default']['symbols'].split(',')]
-
-    yql = 'SELECT * FROM yahoo.finance.quotes WHERE symbol IN (' + ','.join(symbols) + ')'
+    yql = 'SELECT * FROM yahoo.finance.quotes WHERE symbol IN (' + ','.join(config.symbols) + ')'
 
     params = {
       'q' : yql,

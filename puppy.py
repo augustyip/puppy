@@ -14,15 +14,13 @@ from lib.source.yahoo import yahoo
 def main() :
 
   try :
-    # Your Code Stuff Here...
     stdscr.addstr(1,1, "Loading...")
     stdscr.refresh()
 
     # stdscr.getch()
     i = 0
     while True:
-      # quote = {}
-      # quote = data_source.yahoo.quotes()
+
       quotes = yahoo.quotes()
       stdscr.addstr(1,1, "Using Yahoo Finance data, HK stocks will have 15 mins delay.")
       title = '{0:15} {1:10} {2}'.format('Name', 'Price'.rjust(10), 'Percent'.rjust(10))
@@ -42,10 +40,6 @@ def main() :
 
 if __name__ == '__main__':
 
-  # data_source.yahoo.quotes()
-  # sys.exit(0)
-
-  # quotes();
   try :
 
     # Initialize curses

@@ -13,5 +13,7 @@ config_file = os.path.join(dir, '../../config.ini')
 config = configparser.ConfigParser()
 config.read(config_file)
 
+if config['Default']['symbols'] != '' :
+  config.symbols = ['"' + symbol.strip() + '"' for symbol in config['Default']['symbols'].split(',')]
 
 
