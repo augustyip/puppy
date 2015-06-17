@@ -27,8 +27,6 @@ def main() :
 
       stdscr.addstr(3,1, title)
 
-
-
       y = 3
       for q in quote:
         y = y + 1
