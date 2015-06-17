@@ -8,6 +8,7 @@ import curses
 import sys, traceback
 
 from lib.core.data import config
+from lib.source.yahoo import yahoo
 
 
 def main() :
@@ -17,26 +18,25 @@ def main() :
     stdscr.addstr(1,1, "Loading...")
     stdscr.refresh()
 
-    from lib.source.yahoo import quote
     # stdscr.getch()
     i = 0
     while True:
       # quote = {}
       # quote = data_source.yahoo.quotes()
-
+      quotes = yahoo.quotes()
       stdscr.addstr(1,1, "Using Yahoo Finance data, HK stocks will have 15 mins delay.")
       title = '{0:15} {1:10} {2}'.format('Name', 'Price'.rjust(10), 'Percent'.rjust(10))
 
       stdscr.addstr(3,1, title)
 
       y = 3
-      for q in quote:
+      for q in quotes:
         y = y + 1
         data = '{0:15} {1:10} {2}'.format(q['Name'], q['LastTradePriceOnly'].rjust(10), q['ChangeinPercent'].rjust(10))
         stdscr.addstr(y,1, data)
       stdscr.refresh()
       time.sleep(float(config['Default']['refresh']))
-    
+
   finally :
     curses.endwin()
 
