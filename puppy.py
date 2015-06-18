@@ -22,9 +22,12 @@ def main() :
     while True:
 
       stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
-      stdscr.addstr(1, 0, 'current data source: yahoo, last refresh: ' + time.strftime('%H:%M:%S'))
+      stdscr.addstr(1, 0, 'current data source: yahoo.finance, last refresh: ' + time.strftime('%H:%M:%S'))
 
       quotes = yahoo.quotes()
+
+      hsi_quote = quotes.pop(0)
+      stdscr.addstr(2, 0, hsi_quote['Symbol'] + ': ' + hsi_quote['LastTradePriceOnly'] + ' - ' + hsi_quote['Change_PercentChange'] + ', DaysRange: ' + hsi_quote['DaysRange'])
 
       placeholder_str = '{symbol:10}{name:15}{price:6}{change:10}{percent:10}{dayslow:10}{dayshigh:30}'
 
@@ -33,20 +36,19 @@ def main() :
         'name' : 'Name',
         'price' : 'Price'.rjust(6),
         'change' : 'Change'.rjust(10),
-        'percent' : 'Percent'.rjust(10),
+        'percent' : 'Change%'.rjust(10),
         'dayslow' : 'DaysLow'.rjust(10),
         'dayshigh' : 'DaysHigh'.rjust(10),
       }
 
-      row = 3
+      row = 4
 
       stdscr.addstr(row, 0, placeholder_str.format(**columns), curses.A_REVERSE)
 
       for q in quotes:
         row += 1
-
         data = {
-          'symbol' : q['symbol'],
+          'symbol' : q['Symbol'],
           'name' : q['Name'],
           'price' : q['LastTradePriceOnly'].rjust(6),
           'change' : q['Change'].rjust(10),
@@ -57,7 +59,7 @@ def main() :
 
         stdscr.addstr(row, 0, placeholder_str.format(**data))
       stdscr.refresh()
-      time.sleep(float(config['Default']['refresh']))
+      time.sleep(float(config['Yahoo']['refresh']))
 
   finally :
     curses.endwin()

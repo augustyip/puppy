@@ -13,7 +13,13 @@ config_file = os.path.join(dir, '../../config.ini')
 config = configparser.ConfigParser()
 config.read(config_file)
 
-if config['Default']['symbols'] != '' :
-  config.symbols = ['"' + symbol.strip() + '"' for symbol in config['Default']['symbols'].split(',')]
+default_symbos = [
+  '^HSI',
+]
+
+if config['Yahoo']['symbols'] != '' :
+  config.symbols = [symbol.strip() for symbol in config['Yahoo']['symbols'].split(',')]
+
+config.symbols = default_symbos + config.symbols
 
 
