@@ -26,7 +26,7 @@ def main() :
 
       quotes = yahoo.quotes()
 
-      placeholder_str = '{symbol:10}{name:15}{price:6}{change:10}{percent:49}'
+      placeholder_str = '{symbol:10}{name:15}{price:6}{change:10}{percent:10}{dayslow:10}{dayshigh:30}'
 
       columns = {
         'symbol' : 'Symbol',
@@ -34,6 +34,8 @@ def main() :
         'price' : 'Price'.rjust(6),
         'change' : 'Change'.rjust(10),
         'percent' : 'Percent'.rjust(10),
+        'dayslow' : 'DaysLow'.rjust(10),
+        'dayshigh' : 'DaysHigh'.rjust(10),
       }
 
       row = 3
@@ -48,7 +50,9 @@ def main() :
           'name' : q['Name'],
           'price' : q['LastTradePriceOnly'].rjust(6),
           'change' : q['Change'].rjust(10),
-          'percent' : q['ChangeinPercent'].rjust(10)
+          'percent' : q['ChangeinPercent'].rjust(10),
+          'dayslow' : q['DaysLow'].rjust(10),
+          'dayshigh' : q['DaysHigh'].rjust(10),
         }
 
         stdscr.addstr(row, 0, placeholder_str.format(**data))
