@@ -6,6 +6,8 @@ Copyright (c) August Yip (http://august.hk/)
 
 import time
 import curses
+
+from curses import wrapper
 import sys, traceback
 
 from lib.core.data import config
@@ -14,24 +16,42 @@ from lib.source.yahoo import yahoo
 def main() :
 
   try :
-    stdscr.addstr(1,1, "Loading...")
+    stdscr.addstr(1,1, 'Loading...')
     stdscr.refresh()
 
-    # stdscr.getch()
-    i = 0
     while True:
 
+      stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
+      stdscr.addstr(1, 0, 'current data source: yahoo, last refresh: ' + time.strftime('%H:%M:%S'))
+
       quotes = yahoo.quotes()
-      stdscr.addstr(1,1, "Using Yahoo Finance data, HK stocks will have 15 mins delay.")
-      title = '{0:15} {1:10} {2}'.format('Name', 'Price'.rjust(10), 'Percent'.rjust(10))
 
-      stdscr.addstr(3,1, title)
+      placeholder_str = '{symbol:10}{name:15}{price:6}{change:10}{percent:49}'
 
-      y = 3
+      columns = {
+        'symbol' : 'Symbol',
+        'name' : 'Name',
+        'price' : 'Price'.rjust(6),
+        'change' : 'Change'.rjust(10),
+        'percent' : 'Percent'.rjust(10),
+      }
+
+      row = 3
+
+      stdscr.addstr(row, 0, placeholder_str.format(**columns), curses.A_REVERSE)
+
       for q in quotes:
-        y = y + 1
-        data = '{0:15} {1:10} {2}'.format(q['Name'], q['LastTradePriceOnly'].rjust(10), q['ChangeinPercent'].rjust(10))
-        stdscr.addstr(y,1, data)
+        row += 1
+
+        data = {
+          'symbol' : q['symbol'],
+          'name' : q['Name'],
+          'price' : q['LastTradePriceOnly'].rjust(6),
+          'change' : q['Change'].rjust(10),
+          'percent' : q['ChangeinPercent'].rjust(10)
+        }
+
+        stdscr.addstr(row, 0, placeholder_str.format(**data))
       stdscr.refresh()
       time.sleep(float(config['Default']['refresh']))
 
@@ -54,7 +74,7 @@ if __name__ == '__main__':
     # (like the cursor keys) will be interpreted and
     # a special value like curses.KEY_LEFT will be returned
     stdscr.keypad(1)
-    main()
+    wrapper(main())
 
     # Enter the main loop
     # Set everything back to normal
