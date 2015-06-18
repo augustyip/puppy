@@ -31,13 +31,13 @@ class Yahoo(object) :
 
     try :
       response = urllib.request.urlopen(request, timeout = 3)
+
       query_result = json.loads(response.read().decode("utf-8"))
 
-      quote = []
-      if len(query_result['query']['results']['quote']) > 0 :
+      if len(query_result['query']['results']['quote']) > 0:
         return query_result['query']['results']['quote']
     except :
-      self.quotes()
+      return self.quotes()
 
 
 yahoo = Yahoo()
