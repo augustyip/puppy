@@ -4,6 +4,9 @@ Description
 Track your stock portfolio and stock watchlist from the command line.
 [Todo]
 
+Screenshot
+==========
+![Image of puppy](https://raw.githubusercontent.com/augustyip/puppy/master/screenshot.png)
 
 Install
 =======
