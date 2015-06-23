@@ -12,6 +12,7 @@ import sys, traceback
 
 from lib.core.data import config
 from lib.source.yahoo import yahoo
+from lib.source.tencent import tencent
 
 def main() :
 
@@ -65,6 +66,9 @@ def main() :
     curses.endwin()
 
 if __name__ == '__main__':
+
+  print(tencent.quotes())
+  sys.exit(0)
 
   try :
 
