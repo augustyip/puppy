@@ -17,8 +17,13 @@ class Tencent(object) :
     request.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0')
 
     try :
+      quote_results = []
       response = urllib.request.urlopen(request, timeout = 10)
-      return response
+      rows = response.read().decode(encoding='gb2312').split("\n")
+      for row in rows :
+        record = row[row.find('="') + 2 : -2].split('~')
+        print(record)
+
     except :
       return self.quotes()
 

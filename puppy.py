@@ -67,9 +67,6 @@ def main() :
 
 if __name__ == '__main__':
 
-  print(tencent.quotes())
-  sys.exit(0)
-
   try :
 
     # Initialize curses
