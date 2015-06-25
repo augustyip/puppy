@@ -25,12 +25,13 @@ def main() :
       stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
       stdscr.addstr(1, 0, 'current data source: yahoo.finance, last refresh: ' + time.strftime('%H:%M:%S'))
 
-      quotes = yahoo.quotes()
+      # quotes = yahoo.quotes()
+      quotes = tencent.quotes()
 
       hsi_quote = quotes.pop(0)
-      stdscr.addstr(2, 0, hsi_quote['Symbol'] + ': ' + hsi_quote['LastTradePriceOnly'] + ' - ' + hsi_quote['Change_PercentChange'] + ', DaysRange: ' + hsi_quote['DaysRange'])
+      stdscr.addstr(2, 0, hsi_quote['Symbol'] + ': ' + hsi_quote['LastTradePriceOnly'] + ' - ' + hsi_quote['Change'] + ' - ' + hsi_quote['ChangeinPercent'] + ', DaysRange: ' + hsi_quote['DaysLow'] + ' - ' + hsi_quote['DaysHigh'])
 
-      placeholder_str = '{symbol:10}{name:15}{price:6}{change:10}{percent:10}{dayslow:10}{dayshigh:30}'
+      placeholder_str = '{symbol:10}{name:25}{price:6}{change:10}{percent:10}{dayslow:10}{dayshigh:30}'
 
       columns = {
         'symbol' : 'Symbol',

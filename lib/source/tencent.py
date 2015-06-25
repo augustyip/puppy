@@ -17,13 +17,23 @@ class Tencent(object) :
     request.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0')
 
     try :
-      quote_results = []
       response = urllib.request.urlopen(request, timeout = 10)
       rows = response.read().decode(encoding='gb2312').split("\n")
+      quote_results = []
       for row in rows :
-        record = row[row.find('="') + 2 : -2].split('~')
-        print(record)
+        if len(row) > 1 :
+          result = {}
+          record = row[row.find('="') + 2 : -2].split('~')
+          result['Symbol'] = record[2]
+          result['Name'] = record[1]
+          result['LastTradePriceOnly'] = record[3]
+          result['Change'] = record[31]
+          result['ChangeinPercent'] = record[32] + '%'
+          result['DaysLow'] = record[33]
+          result['DaysHigh'] = record[34]
+          quote_results.append(result)
 
+      return quote_results
     except :
       return self.quotes()
 
