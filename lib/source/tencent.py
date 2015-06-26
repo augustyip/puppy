@@ -25,7 +25,7 @@ class Tencent(object) :
           result = {}
           record = row[row.find('="') + 2 : -2].split('~')
           result['Symbol'] = record[2]
-          result['Name'] = record[1]
+          result['Name'] = record[46]
           result['LastTradePriceOnly'] = record[3]
           result['Change'] = record[31]
           result['ChangeinPercent'] = record[32] + '%'

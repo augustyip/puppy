@@ -20,18 +20,26 @@ def main() :
     stdscr.addstr(1,1, 'Loading...')
     stdscr.refresh()
 
+    source = config['Default']['source']
+
     while True:
 
       stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
-      stdscr.addstr(1, 0, 'current data source: yahoo.finance, last refresh: ' + time.strftime('%H:%M:%S'))
+      stdscr.addstr(1, 0, 'current data source: ' + source + ', last refresh: ' + time.strftime('%H:%M:%S'))
 
-      # quotes = yahoo.quotes()
-      quotes = tencent.quotes()
+      if source == 'yahoo' :
+        quotes = yahoo.quotes()
+      else :
+        quotes = tencent.quotes()
 
       hsi_quote = quotes.pop(0)
       stdscr.addstr(2, 0, hsi_quote['Symbol'] + ': ' + hsi_quote['LastTradePriceOnly'] + ' - ' + hsi_quote['Change'] + ' - ' + hsi_quote['ChangeinPercent'] + ', DaysRange: ' + hsi_quote['DaysLow'] + ' - ' + hsi_quote['DaysHigh'])
 
-      placeholder_str = '{symbol:10}{name:25}{price:6}{change:10}{percent:10}{dayslow:10}{dayshigh:30}'
+      if source == 'tencent' :
+        shi_quote = quotes.pop(0)
+        stdscr.addstr(3, 0, 'SSEC: ' + shi_quote['LastTradePriceOnly'] + ' - ' + shi_quote['Change'] + ' - ' + shi_quote['ChangeinPercent'] + ', DaysRange: ' + shi_quote['DaysLow'] + ' - ' + shi_quote['DaysHigh'])
+
+      placeholder_str = '{symbol:10}{name:15}{price:6}{change:10}{percent:10}{dayslow:10}{dayshigh:30}'
 
       columns = {
         'symbol' : 'Symbol',
@@ -43,7 +51,7 @@ def main() :
         'dayshigh' : 'DaysHigh'.rjust(10),
       }
 
-      row = 4
+      row = 6
 
       stdscr.addstr(row, 0, placeholder_str.format(**columns), curses.A_REVERSE)
 
@@ -61,7 +69,7 @@ def main() :
 
         stdscr.addstr(row, 0, placeholder_str.format(**data))
       stdscr.refresh()
-      time.sleep(float(config['Yahoo']['refresh']))
+      # time.sleep(float(config['Yahoo']['refresh']))
 
   finally :
     curses.endwin()
