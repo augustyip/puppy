@@ -33,3 +33,4 @@ TODO
 * Provide menu to select which data soucre will be used.
 * Make the data colorful
 * Fix bugs.
+* Fix the tencent data source request time too long.
