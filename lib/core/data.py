@@ -28,6 +28,7 @@ elif config.source == 'tencent' :
   default_symbos = [
     'hkHSI',
     'sh000001',
+    'usDJI',
   ]
 
   if config['Tencent']['symbols'] != '' :

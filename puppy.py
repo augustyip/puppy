@@ -36,6 +36,8 @@ def main() :
       if config.source == 'tencent' :
         shi_quote = quotes.pop(0)
         stdscr.addstr(3, 0, 'SSEC: ' + shi_quote['LastTradePriceOnly'] + ' - ' + shi_quote['Change'] + ' - ' + shi_quote['ChangeinPercent'] + ', DaysRange: ' + shi_quote['DaysLow'] + ' - ' + shi_quote['DaysHigh'])
+        dji_quote = quotes.pop(0)
+        stdscr.addstr(4, 0, 'DJI: ' + dji_quote['LastTradePriceOnly'] + ' - ' + dji_quote['Change'] + ' - ' + dji_quote['ChangeinPercent'] + ', DaysRange: ' + dji_quote['DaysLow'] + ' - ' + dji_quote['DaysHigh'])
 
       placeholder_str = '{symbol:10}{name:15}{price:6}{change:10}{percent:10}{dayslow:10}{dayshigh:30}'
 
