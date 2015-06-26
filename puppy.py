@@ -20,14 +20,12 @@ def main() :
     stdscr.addstr(1,1, 'Loading...')
     stdscr.refresh()
 
-    source = config['Default']['source']
-
     while True:
 
       stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
-      stdscr.addstr(1, 0, 'current data source: ' + source + ', last refresh: ' + time.strftime('%H:%M:%S'))
+      stdscr.addstr(1, 0, 'current data source: ' + config.source + ', last refresh: ' + time.strftime('%H:%M:%S'))
 
-      if source == 'yahoo' :
+      if config.source == 'yahoo' :
         quotes = yahoo.quotes()
       else :
         quotes = tencent.quotes()
@@ -35,7 +33,7 @@ def main() :
       hsi_quote = quotes.pop(0)
       stdscr.addstr(2, 0, hsi_quote['Symbol'] + ': ' + hsi_quote['LastTradePriceOnly'] + ' - ' + hsi_quote['Change'] + ' - ' + hsi_quote['ChangeinPercent'] + ', DaysRange: ' + hsi_quote['DaysLow'] + ' - ' + hsi_quote['DaysHigh'])
 
-      if source == 'tencent' :
+      if config.source == 'tencent' :
         shi_quote = quotes.pop(0)
         stdscr.addstr(3, 0, 'SSEC: ' + shi_quote['LastTradePriceOnly'] + ' - ' + shi_quote['Change'] + ' - ' + shi_quote['ChangeinPercent'] + ', DaysRange: ' + shi_quote['DaysLow'] + ' - ' + shi_quote['DaysHigh'])
 

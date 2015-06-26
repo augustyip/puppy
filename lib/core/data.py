@@ -13,12 +13,26 @@ config_file = os.path.join(dir, '../../config.ini')
 config = configparser.ConfigParser()
 config.read(config_file)
 
-default_symbos = [
-  '^HSI',
-]
+config.source = config['Default']['source']
 
-if config['Yahoo']['symbols'] != '' :
-  config.symbols = [symbol.strip() for symbol in config['Yahoo']['symbols'].split(',')]
+if config.source == 'yahoo' :
+  default_symbos = [
+    '^HSI',
+  ]
+
+  if config['Yahoo']['symbols'] != '' :
+    config.symbols = [symbol.strip() for symbol in config['Yahoo']['symbols'].split(',')]
+
+elif config.source == 'tencent' :
+
+  default_symbos = [
+    'hkHSI',
+    'sh000001',
+  ]
+
+  if config['Tencent']['symbols'] != '' :
+    config.symbols = [symbol.strip() for symbol in config['Tencent']['symbols'].split(',')]
+
 
 config.symbols = default_symbos + config.symbols
 

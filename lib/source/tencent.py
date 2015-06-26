@@ -12,7 +12,7 @@ class Tencent(object) :
 
   def quotes(self) :
 
-    query_url = 'http://qt.gtimg.qq.com/?q=hkHSI,sh000001,r_hk00001,r_hk00005'
+    query_url = 'http://qt.gtimg.qq.com/?q=' + ','.join(config.symbols)
     request = urllib.request.Request(query_url)
     request.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0')
 
