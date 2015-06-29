@@ -29,8 +29,8 @@ class Tencent(object) :
           result['LastTradePriceOnly'] = record[3]
           result['Change'] = record[31]
           result['ChangeinPercent'] = record[32] + '%'
-          result['DaysLow'] = record[33]
-          result['DaysHigh'] = record[34]
+          result['DaysLow'] = record[34]
+          result['DaysHigh'] = record[33]
           quote_results.append(result)
 
       return quote_results
