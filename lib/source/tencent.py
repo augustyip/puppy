@@ -5,7 +5,7 @@ import urllib.parse
 
 import json
 
-from lib.core.data import config
+from lib.core.config import config
 
 class Tencent(object) :
 

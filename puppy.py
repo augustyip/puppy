@@ -10,7 +10,7 @@ import curses
 from curses import wrapper
 import sys, traceback
 
-from lib.core.data import config
+from lib.core.config import config
 from lib.source.yahoo import yahoo
 from lib.source.tencent import tencent
 
@@ -23,12 +23,10 @@ def main() :
     while True:
 
       stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
-      stdscr.addstr(1, 0, 'current data source: ' + config.source + ', last refresh: ' + time.strftime('%H:%M:%S'))
+      stdscr.addstr(1, 0, 'current data source: ' + config.config['Default']['source'] + ', last refresh: ' + time.strftime('%H:%M:%S'))
       stdscr.addstr(23, 0, 'Press 0 Key to Exit...')
-      
 
-
-      if config.source == 'yahoo' :
+      if config.config['Default']['source'] == 'Yahoo' :
         quotes = yahoo.quotes()
       else :
         quotes = tencent.quotes()
@@ -36,7 +34,7 @@ def main() :
       hsi_quote = quotes.pop(0)
       stdscr.addstr(2, 0, hsi_quote['Symbol'] + ': ' + hsi_quote['LastTradePriceOnly'] + ' - ' + hsi_quote['Change'] + ' - ' + hsi_quote['ChangeinPercent'] + ', DaysRange: ' + hsi_quote['DaysLow'] + ' - ' + hsi_quote['DaysHigh'])
 
-      if config.source == 'tencent' :
+      if config.config['Default']['source'] == 'Tencent' :
         shi_quote = quotes.pop(0)
         stdscr.addstr(3, 0, 'SSEC: ' + shi_quote['LastTradePriceOnly'] + ' - ' + shi_quote['Change'] + ' - ' + shi_quote['ChangeinPercent'] + ', DaysRange: ' + shi_quote['DaysLow'] + ' - ' + shi_quote['DaysHigh'])
         dji_quote = quotes.pop(0)
@@ -72,10 +70,10 @@ def main() :
 
         stdscr.addstr(row, 0, placeholder_str.format(**data))
 
-      key = stdscr.getch()
+      # key = stdscr.getch()
 
-      if key == ord('0') :
-        sys.exit(0)
+      # if key == ord('0') :
+      #   sys.exit(0)
       stdscr.refresh()
 
 
