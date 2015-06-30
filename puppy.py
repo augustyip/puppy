@@ -24,7 +24,7 @@ def main() :
 
       stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
       stdscr.addstr(1, 0, 'current data source: ' + config.config['Default']['source'] + ', last refresh: ' + time.strftime('%H:%M:%S'))
-      stdscr.addstr(23, 0, 'Press 0 Key to Exit...')
+      # stdscr.addstr(23, 0, 'Press 0 Key to Exit...')
 
       if config.config['Default']['source'] == 'Yahoo' :
         quotes = yahoo.quotes()
@@ -70,12 +70,7 @@ def main() :
 
         stdscr.addstr(row, 0, placeholder_str.format(**data))
 
-      # key = stdscr.getch()
-
-      # if key == ord('0') :
-      #   sys.exit(0)
       stdscr.refresh()
-
 
       # time.sleep(float(config['Yahoo']['refresh']))
 
