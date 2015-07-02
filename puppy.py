@@ -72,20 +72,20 @@ def main() :
 
         stdscr.addstr(row, 0, placeholder_str.format(**data))
 
-
-        d = datetime.now()
-        current_y = d.year
-        current_m = d.month
-        current_d = d.day
-
-        current_ts = time.time()
-        open_ts    = time.mktime(time.strptime(str(current_y) + str(current_m) + str(current_d) + " 9:30", "%Y%m%d %H:%M"))
-        close_ts   = time.mktime(time.strptime(str(current_y) + str(current_m) + str(current_d) + " 16:00", "%Y%m%d %H:%M"))
-
-        if current_ts < open_ts or current_ts > close_ts :
-          break
-
       stdscr.refresh()
+
+      # d = datetime.now()
+      # current_y = d.year
+      # current_m = d.month
+      # current_d = d.day
+
+      # current_ts = time.time()
+      # open_ts    = time.mktime(time.strptime(str(current_y) + str(current_m) + str(current_d) + " 9:30", "%Y%m%d %H:%M"))
+      # close_ts   = time.mktime(time.strptime(str(current_y) + str(current_m) + str(current_d) + " 16:00", "%Y%m%d %H:%M"))
+
+      # if current_ts < open_ts or current_ts > close_ts :
+      #   break
+
 
       # time.sleep(float(config['Yahoo']['refresh']))
 
@@ -105,10 +105,11 @@ if __name__ == '__main__':
     curses.cbreak()
     
     # In keypad mode, escape sequences for special keys
-    # (like the cursor keys) will be interpreted and
+    # (like the cursor keys) will be interpreted andh
     # a special value like curses.KEY_LEFT will be returned
     stdscr.keypad(1)
-    wrapper(main())
+    main()
+    # wrapper(main())
 
     # Enter the main loop
     # Set everything back to normal
