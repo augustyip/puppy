@@ -8,6 +8,8 @@ import time
 import curses
 
 from curses import wrapper
+from datetime import datetime
+
 import sys, traceback
 
 from lib.core.config import config
@@ -69,6 +71,19 @@ def main() :
         }
 
         stdscr.addstr(row, 0, placeholder_str.format(**data))
+
+
+        d = datetime.now()
+        current_y = d.year
+        current_m = d.month
+        current_d = d.day
+
+        current_ts = time.time()
+        open_ts    = time.mktime(time.strptime(str(current_y) + str(current_m) + str(current_d) + " 9:30", "%Y%m%d %H:%M"))
+        close_ts   = time.mktime(time.strptime(str(current_y) + str(current_m) + str(current_d) + " 16:00", "%Y%m%d %H:%M"))
+
+        if current_ts < open_ts or current_ts > close_ts :
+          break
 
       stdscr.refresh()
 
