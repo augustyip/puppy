@@ -36,52 +36,8 @@ def main() :
     while True:
       stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
       stdscr.addstr(1, 0, 'current data source: ' + config.config['Default']['source'] + ', last refresh: ' + time.strftime('%H:%M:%S'))
-      # stdscr.addstr(23, 0, 'Press 0 Key to Exit...')
-
-      if config.config['Default']['source'] == 'Yahoo' :
-        quotes = yahoo.quotes()
-      else :
-        quotes = tencent.quotes()
-
-      hsi_quote = quotes.pop(0)
-      stdscr.addstr(2, 0, hsi_quote['Symbol'] + ': ' + hsi_quote['LastTradePriceOnly'] + ' - ' + hsi_quote['Change'] + ' - ' + hsi_quote['ChangeinPercent'] + ', DaysRange: ' + hsi_quote['DaysLow'] + ' - ' + hsi_quote['DaysHigh'])
-
-      if config.config['Default']['source'] == 'Tencent' :
-        shi_quote = quotes.pop(0)
-        stdscr.addstr(3, 0, 'SSEC: ' + shi_quote['LastTradePriceOnly'] + ' - ' + shi_quote['Change'] + ' - ' + shi_quote['ChangeinPercent'] + ', DaysRange: ' + shi_quote['DaysLow'] + ' - ' + shi_quote['DaysHigh'])
-        dji_quote = quotes.pop(0)
-        stdscr.addstr(4, 0, 'DJI: ' + dji_quote['LastTradePriceOnly'] + ' - ' + dji_quote['Change'] + ' - ' + dji_quote['ChangeinPercent'] + ', DaysRange: ' + dji_quote['DaysLow'] + ' - ' + dji_quote['DaysHigh'])
-
-      placeholder_str = '{symbol:10}{name:15}{price:6}{change:10}{percent:10}{dayslow:10}{dayshigh:30}'
-
-      columns = {
-        'symbol' : 'Symbol',
-        'name' : 'Name',
-        'price' : 'Price'.rjust(6),
-        'change' : 'Change'.rjust(10),
-        'percent' : 'Change%'.rjust(10),
-        'dayslow' : 'DaysLow'.rjust(10),
-        'dayshigh' : 'DaysHigh'.rjust(10),
-      }
-
-      row = 6
-
-      stdscr.addstr(row, 0, placeholder_str.format(**columns), curses.A_REVERSE)
-
-      for q in quotes:
-        row += 1
-        data = {
-          'symbol' : q['Symbol'],
-          'name' : q['Name'],
-          'price' : q['LastTradePriceOnly'].rjust(6),
-          'change' : q['Change'].rjust(10),
-          'percent' : q['ChangeinPercent'].rjust(10),
-          'dayslow' : q['DaysLow'].rjust(10),
-          'dayshigh' : q['DaysHigh'].rjust(10),
-        }
-
-        stdscr.addstr(row, 0, placeholder_str.format(**data))
-
+      # move to render function.
+      
       stdscr.refresh()
 
     # Set everything back to normal
