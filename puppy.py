@@ -39,8 +39,7 @@ def main() :
     while True:
       stdscr.addstr(0, 0, 'puppy - version: 0.9.3.14159265')
       stdscr.addstr(1, 0, 'current data source: ' + config.config['Default']['source'] + ', last refresh: ' + time.strftime('%H:%M:%S'))
-      # stdscr.addstr(23, 0, 'Press 0 Key to Exit...')
-
+      stdscr.addstr(23, 0, 'Press q Key to Exit...')
 
       stdscr.refresh()
 
